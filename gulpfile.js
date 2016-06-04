@@ -1,17 +1,15 @@
-var gulp   = require('gulp')
-  , browserify = require('gulp-browserify')
-  , rename = require('gulp-rename');
+var gulp   = require('gulp');
+var source = require('vinyl-source-stream');
+var browserify = require('browserify');
 
 gulp.task('watch', function() {
   gulp.watch('./app/main.js', ['browserify']);
 })
 
 gulp.task('browserify', function() {
-  return gulp.src('./app/main.js')  
-    .pipe(browserify({
-      insertGlobals : false
-    }))
-    .pipe(rename('bundle.js'))
+  return browserify('./app/main.js')
+    .bundle()
+    .pipe(source('bundle.js'))
     .pipe(gulp.dest('./app'));
 })
 
